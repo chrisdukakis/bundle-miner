@@ -1,0 +1,21 @@
+[package]
+name = "bundle_miner"
+version = "0.1.0"
+authors = ["Chris Dukakis <chrisdukakis@gmail.com>"]
+description = "Bundle miner"
+license = "MIT"
+repository = "https://github.com/chris_dukakis/bundle-miner"
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+iota-crypto = "0.2.0"
+iota-model = "0.2.0"
+iota-trytes = { path = '../iota.rs/trytes' }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.0"
+iota-conversion = "0.2.0"
