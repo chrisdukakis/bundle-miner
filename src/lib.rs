@@ -124,8 +124,39 @@ pub fn normalized_bundle(bundle: &[i8], output: &mut [i8]) {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use iota_conversion::Trinary;
+
+    const N: usize = 2;
+
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn test_mine() {
+        let v1: Vec<i8> = "QVXRKNRXFZIPFPREXRAPNHNSRFFQOWBGCAFZEGFCKDPDXRNVZQ9VJPQPPTFXKPVZVAIENQLETXRVSFKFO".trits();
+        let mut a: [i8; HASH_LENGTH] = [0; HASH_LENGTH];
+        for (i, t) in v1.iter().enumerate() {
+            a[i] = *t;
+        }
+
+        let v2: Vec<i8> = "JKHLAKTRTDIKMTERIRYEWI9PPOJAKHZEMNCXFB9GTRZRWKSFVAZANHSPABGGQIJAVULKMPPAL9VBSRB9E".trits();
+        let mut b: [i8; HASH_LENGTH] = [0; HASH_LENGTH];
+        for (i, t) in v2.iter().enumerate() {
+            b[i] = *t;
+        }
+
+        let mut nb1: [i8; NORMALIZED_BUNDLE_LENGTH] = [0; NORMALIZED_BUNDLE_LENGTH];
+        normalized_bundle(&a, &mut nb1);
+
+        let mut nb2: [i8; NORMALIZED_BUNDLE_LENGTH] = [0; NORMALIZED_BUNDLE_LENGTH];
+        normalized_bundle(&b, &mut nb2);
+
+        let mut m: [i8; NORMALIZED_BUNDLE_LENGTH] = [0; NORMALIZED_BUNDLE_LENGTH];
+        min_normalized_bundle(&nb1, &nb2, &mut m);
+
+        const E: usize = 486 * 4;
+        let mut e: [i8; E] = [0; E];
+
+        let i: i32 = mine(&m, N, &mut e, 0, 1000000);
+
+        assert_eq!(i, 722);
     }
 }
