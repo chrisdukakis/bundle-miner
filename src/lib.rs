@@ -32,17 +32,10 @@ pub fn probability_of_losing(nb: &[i8], n: usize) -> f64 {
 
     for i in 0..n * NORMALIZED_FRAGMENT_LENGTH {
 
-        let pi = 1.0 - ((MAX_TRYTE_VALUE - nb[i]) as f64 / (MAX_TRYTE_VALUE - MIN_TRYTE_VALUE) as f64);
+        let pi = 1.0 - ((MAX_TRYTE_VALUE - nb[i]) as f64 / (MAX_TRYTE_VALUE - MIN_TRYTE_VALUE + 1) as f64);
 
-        if pi > 0.0 {
-            if p == 0.0 {
-                p = 1.0
-            }
-
-            p *= pi
-        }
+        p *= pi
     }
-
 
     return p
 }
